@@ -10,11 +10,13 @@ import SwiftData
 
 @main
 struct CalendarTestApp: App {
+	let eventManager = EventManager()
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            Activity.self,
         ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+		let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+//		let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -26,6 +28,7 @@ struct CalendarTestApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+				.environment(eventManager)
         }
         .modelContainer(sharedModelContainer)
     }
